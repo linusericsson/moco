@@ -262,7 +262,7 @@ def main_worker(gpu, ngpus_per_node, args):
         'color_jitter': transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         'grayscale': transforms.RandomGrayscale(p=0.2),
         'blur': transforms.RandomApply([moco.loader.GaussianBlur([.1, 2.])], p=0.5),
-        'to-tensor': T.ToTensor(),
+        'to-tensor': transforms.ToTensor(),
         'normalize': normalize
     }
 
