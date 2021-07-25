@@ -25,6 +25,9 @@ import torchvision.models as models
 import moco.loader
 import moco.builder
 
+from cutout import Cutout
+
+
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
@@ -262,16 +265,19 @@ def main_worker(gpu, ngpus_per_node, args):
         'color_jitter': transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         'grayscale': transforms.RandomGrayscale(p=0.2),
         'blur': transforms.RandomApply([moco.loader.GaussianBlur([.1, 2.])], p=0.5),
+        'cutout': Cutout(min_holes=0, max_holes=8, min_length=16, max_length=112),
         'to-tensor': transforms.ToTensor(),
         'normalize': normalize
     }
 
-    augmentation = [augs_dict[aug] for aug in args.augmentations]
+    augmentation = [augs_dict[aug] for aug in args.augmentations if aug != 'cutout']
     if 'resized_crop' not in args.augmentations:
         augmentation.append(augs_dict['resize'])
         augmentation.append(augs_dict['center_crop'])
     augmentation.append(augs_dict['to-tensor'])
     augmentation.append(augs_dict['normalize'])
+    if 'cutout' in args.augmentations:
+        augmentation.append(augs_dict['cutout'])
     print("Augmentation:", augmentation)
 
     #####################################
