@@ -20,7 +20,7 @@ import torch.utils.data
 import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-import .resnet50 as models
+import resnet50 as models
 
 import moco.loader
 import moco.builder
