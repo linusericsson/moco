@@ -20,7 +20,7 @@ import torch.utils.data
 import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-import torchvision.models as models
+import .resnet50 as models
 
 import moco.loader
 import moco.builder
@@ -28,9 +28,7 @@ import moco.builder
 from cutout import Cutout
 
 
-model_names = sorted(name for name in models.__dict__
-    if name.islower() and not name.startswith("__")
-    and callable(models.__dict__[name]))
+model_names = ['resnet50', 'resnet50w2', 'resnet50w3', 'resnet50w4', 'resnet50w5']
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('data', metavar='DIR',
