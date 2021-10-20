@@ -28,11 +28,12 @@ import moco.builder
 from cutout import Cutout
 
 
-model_names = ['resnet50', 'resnet50w2', 'resnet50w3', 'resnet50w4', 'resnet50w5']
+model_names = ['resnet50', 'resnet50w3']
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('data', metavar='DIR',
                     help='path to dataset')
+parser.add_argument('--split', metavar='SPLIT', default='train', help='split to use for training (default: train)')
 parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet50',
                     choices=model_names,
                     help='model architecture: ' +
@@ -221,7 +222,7 @@ def main_worker(gpu, ngpus_per_node, args):
     cudnn.benchmark = True
 
     # Data loading code
-    traindir = os.path.join(args.data, 'train')
+    traindir = os.path.join(args.data, args.split)
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
     if args.aug_plus:
