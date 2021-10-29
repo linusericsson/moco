@@ -358,6 +358,11 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
             # compute gradient and do SGD step
             loss.backward()
+
+        # divide to get the average of the gradients
+        with torch.no_grad():
+            for p in model.parameters():
+                p.grad.div_(args.sub_batches)
         
         # all gradients have accumulated, now we step
         optimizer.step()
