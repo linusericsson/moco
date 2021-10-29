@@ -28,7 +28,7 @@ import moco.builder
 from cutout import Cutout
 
 
-model_names = ['resnet50', 'resnet50w3']
+model_names = ['resnet18', 'resnet18w3', 'resnet50', 'resnet50w3']
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('data', metavar='DIR',
